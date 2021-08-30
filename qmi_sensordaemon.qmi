@@ -1,0 +1,60 @@
+package sensordaemon;
+
+const QMI_SD_RESULT_SUCCESS = 0;
+const QMI_SD_RESULT_FAILURE = 1;
+
+const QMI_SD_ERR_NONE = 0;
+const QMI_SD_ERR_INTERNAL = 1;
+const QMI_SD_ERR_MALFORMED_MSG = 2;
+
+const QMI_SD_OPEN = 1;
+const QMI_SD_CLOSE = 2;
+const QMI_SD_RW_IOVEC = 3;
+const QMI_SD_ALLOC_BUFF = 4;
+const QMI_SD_GET_DEV_ERROR = 5;
+const QMI_SD_FORCE_SYNC_IND = 6;
+
+struct qmi_result {
+	u16 result;
+	u16 error;
+};
+
+request open_req {
+	required string path = 1;
+} = 1;
+
+response open_resp {
+	required qmi_result result = 2;
+	optional u32 caller_id = 0x10;
+} = 1;
+
+request close_req {
+	required u32 caller_id = 1;
+} = 2;
+
+response close_resp {
+	required qmi_result result = 2;
+} = 2;
+
+request alloc_buf_req {
+	required u32 caller_id = 1;
+	required u32 buff_size = 2;
+} = 4;
+
+response alloc_buf_resp {
+	required qmi_result result = 2;
+	optional u64 buff_address = 0x10;
+} = 4;
+
+request dev_error_req {
+	required u32 caller_id = 1;
+} = 5;
+
+response dev_error_resp {
+	required qmi_result result = 2;
+	optional u8 status = 0x10;
+} = 5;
+
+indication force_sync {
+	required u32 caller_id(10) = 1;
+} = 6;
