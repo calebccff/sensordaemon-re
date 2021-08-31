@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Failed to create qrtr socket\n");
 		return sensor_fd;
 	}
-	ret = qrtr_new_lookup(sensor_fd, SENSOR_QMI_SERVICE, 0, 0);
+	ret = qrtr_new_lookup(sensor_fd, SNS_CLIENT_QMI_SERVICE, 0, 0);
 	if (sensor_fd < 0) {
 		fprintf(stderr, "Failed to lookup service\n");
 		return sensor_fd;

@@ -1,29 +1,34 @@
 package sensordaemon;
-
-const QMI_SD_RESULT_SUCCESS = 0;
-const QMI_SD_RESULT_FAILURE = 1;
-
-const QMI_SD_ERR_NONE = 0;
-const QMI_SD_ERR_INTERNAL = 1;
-const QMI_SD_ERR_MALFORMED_MSG = 2;
-
-const QMI_SD_CLIENT_REQ = 0x20;
-const QMI_SD_CLOSE = 2;
-const QMI_SD_RW_IOVEC = 3;
-const QMI_SD_ALLOC_BUFF = 4;
-const QMI_SD_GET_DEV_ERROR = 5;
-const QMI_SD_FORCE_SYNC_IND = 6;
-
+ 
+const SNS_CLIENT_QMI_SERVICE = 400;
+ 
+const QMI_RESULT_SUCCESS = 0;
+const QMI_RESULT_FAILURE = 1;
+ 
+const QMI_ERR_NONE = 0;
+const QMI_ERR_INTERNAL = 1;
+const QMI_ERR_MALFORMED_MSG = 2;
+ 
+const SNS_CLIENT_REQ = 0x20;
+const SNS_CLIENT_RESP = 0x20;
+const SNS_CLIENT_REPORT = 0x22;
+ 
 struct qmi_result {
 	u16 result;
 	u16 error;
 };
-
+ 
 request sensor_client_req {
-	required u8 payload(1000) = 1;
+	required u8 payload(1000) = 0x1;
 } = 0x20;
-
+ 
 response sensor_client_resp {
-	required qmi_result result = 1;
-	required u8 payload(1000) = 2;
+	required qmi_result result = 0x2;
+	optional u64 client_id = 0x10;
+	optional u32 res = 0x11;
 } = 0x20;
+ 
+response sensor_client_ind {
+	required u64 client_id = 0x01;
+	required u8 payload(1000) = 0x02;
+} = 0x22;

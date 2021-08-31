@@ -6,17 +6,15 @@
 
 #include "libqrtr.h"
 
-#define QMI_SD_RESULT_SUCCESS 0
-#define QMI_SD_RESULT_FAILURE 1
-#define QMI_SD_ERR_NONE 0
-#define QMI_SD_ERR_INTERNAL 1
-#define QMI_SD_ERR_MALFORMED_MSG 2
-#define QMI_SD_CLIENT_REQ 32
-#define QMI_SD_CLOSE 2
-#define QMI_SD_RW_IOVEC 3
-#define QMI_SD_ALLOC_BUFF 4
-#define QMI_SD_GET_DEV_ERROR 5
-#define QMI_SD_FORCE_SYNC_IND 6
+#define SNS_CLIENT_QMI_SERVICE 400
+#define QMI_RESULT_SUCCESS 0
+#define QMI_RESULT_FAILURE 1
+#define QMI_ERR_NONE 0
+#define QMI_ERR_INTERNAL 1
+#define QMI_ERR_MALFORMED_MSG 2
+#define SNS_CLIENT_REQ 32
+#define SNS_CLIENT_RESP 32
+#define SNS_CLIENT_REPORT 34
 
 struct sensordaemon_qmi_result {
 	uint16_t result;
@@ -30,11 +28,20 @@ struct sensordaemon_sensor_client_req {
 
 struct sensordaemon_sensor_client_resp {
 	struct sensordaemon_qmi_result result;
+	bool client_id_valid;
+	uint64_t client_id;
+	bool res_valid;
+	uint32_t res;
+};
+
+struct sensordaemon_sensor_client_ind {
+	uint64_t client_id;
 	uint32_t payload_len;
 	uint8_t payload[1000];
 };
 
 extern struct qmi_elem_info sensordaemon_sensor_client_req_ei[];
 extern struct qmi_elem_info sensordaemon_sensor_client_resp_ei[];
+extern struct qmi_elem_info sensordaemon_sensor_client_ind_ei[];
 
 #endif

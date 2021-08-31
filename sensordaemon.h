@@ -1,1 +1,0 @@
-#define SENSOR_QMI_SERVICE 400
