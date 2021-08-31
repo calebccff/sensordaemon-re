@@ -1,0 +1,25 @@
+
+message ssc_registry_status {
+        required string name = 1;
+        required int32 sts_1 = 2;
+        required in32 sts_2 = 3;
+}
+
+message ssc_sensor_id {
+        required int64 id_1 = 1;
+        required int64 id_2 = 2;
+}
+
+message ssc_unknown_status {
+        required 
+}
+
+message ssc_proto_hello {
+        required message ssc_sensor_id = 1;
+        required int32 msg_id = 2;
+        required message ssc_unknown_status = 3;
+}
+
+message ssc_proto_sensor_info {
+        
+}

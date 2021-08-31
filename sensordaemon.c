@@ -22,10 +22,10 @@
 
 int main(int argc, char **argv)
 {
-	struct sigaction action;
 	int sensor_fd, ret;
 	unsigned char* buf;
 	struct qrtr_packet resp;
+	struct sensordaemon_sensor_client_resp qmi_resp = {};
 	struct sockaddr_qrtr sq;
 	socklen_t sl;
 
@@ -63,6 +63,8 @@ int main(int argc, char **argv)
 			printf("0x%2x %s", *(uint8_t*)(resp.data + i),
 				i == resp.data_len-1 ? "\n": "");
 		}
+
+		//ret = qmi_decode_message(&qmi_resp, 0, &resp, )
 	}
 
 	free(buf);

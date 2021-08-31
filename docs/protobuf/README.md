@@ -13,7 +13,7 @@ root:
         1 <64bit> = 0xABABABABABABABAB / -6076574518398440533 / -2.5301707e-98 // sensor ID (dummy value here)
         2 <64bit> = 0xABABABABABABABAB / -6076574518398440533 / -2.5301707e-98
     2 <32bit> = 0x00000200 / 512 / 7.17465e-43 // Message id?
-    3 <chunk> = message(1 <varint> = 1, 2 <varint> = 0) // 
+    3 <chunk> = message(1 <varint> = 1, 2 <varint> = 0) // result / error
     4 <chunk> = message:
         2 <chunk> = message:
             1 <chunk> = "registry"
