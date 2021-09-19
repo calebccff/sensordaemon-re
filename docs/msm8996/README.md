@@ -27,11 +27,11 @@ This is the structure of the message roughly resembled by a C struct:
 struct msg {
 	const u8 header;
 	u8 counter;
-	u8 unknown2[12];
+	u8 unknown1[12];
 	u32 ticks;
-	u8 unknown3[5];
+	u8 unknown2[5];
 	u8 data;
-	u8 unknown4[9];
+	u8 unknown3[9];
 };
 ```
 **Description:**
@@ -40,9 +40,9 @@ struct msg {
 + `ticks`: Timestamp in 32768Hz ticks, Time(s) = `ticks / 32768`
 + `data`: Sensor data. In this case, it is 1 when the proximity sensor is triggered, 0 otherwise.
 
-**NOTE:** Some of `unknown3` might be part of `data` which would make it `u32` instead of `u8`, but in this case the data is boolean so these bytes are always 0.
+**NOTE:** Some of `unknown2` and `unknown3` might be part of `data` which would make it `u32` instead of `u8`, but in this case the data is boolean so these bytes are always 0.
 
-There should be a sensor ID somewhere here, possibly in `unknown2`.
+There should be a sensor ID somewhere here, possibly in `unknown1`.
 
 ## Accelerometer
 Messages from the acclerometer are larger, probably since there is more data to carry:
@@ -52,11 +52,39 @@ Messages from the acclerometer are larger, probably since there is more data to 
 ```
 04 6b 05 22 00 2c 00 01 01 00 01 02 0d 00 01 00 00 00 01 0c 28 6a 00 00 00 1a 00 03 11 00 01 d3 46 02 00 fa be ff ff bf 5c f6 ff 00 00 16 00 10 01 00 00
 ```
-These also have the `0x04` header and a counter:
+These also have the `0x04` header, a counter and a timestamp:
 ```c
 struct msg {
 	const u8 header;
 	u8 counter;
+	u8 unknown1[12];
+	u32 ticks;
+	u8 unknown2[8]
+	u32 x;
+	u32 z;
+	u32 y;
+	u8 unknown3[8];
 	...
 };
+```
+```
+			Y
+			|
+		_________________
+		|	|	|
+		|	|    Z	|
+		|	|   /	|
+		|	|  /	|
+		|	| /	|
+		|	|/	|
+	 X<-----|-------/--------|----->X
+		|      /|	|
+		|     /	|	|
+		|    /	|	|
+		|   /	|	|
+		|  Z	|	|
+		|_______|_______|
+			|
+			|
+			Y
 ```
