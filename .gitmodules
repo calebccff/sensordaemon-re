@@ -1,0 +1,3 @@
+[submodule "qrtr"]
+	path = qrtr
+	url = https://github.com/andersson/qrtr
