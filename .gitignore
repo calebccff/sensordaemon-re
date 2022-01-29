@@ -1,2 +1,4 @@
 sensordaemon
 *.o
+.vscode/
+
